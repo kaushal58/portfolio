@@ -5,7 +5,7 @@ import { portfolioSeed } from "./seedData.js";
 
 dotenv.config();
 
-const uri = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/portfolio";
+const uri = process.env.MONGODB_URI || process.env.MONGO_URI || "mongodb://127.0.0.1:27017/portfolio";
 
 async function seed() {
   try {
