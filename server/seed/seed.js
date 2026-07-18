@@ -5,11 +5,18 @@ import { portfolioSeed } from "./seedData.js";
 
 dotenv.config();
 
-const uri = process.env.MONGODB_URI || process.env.MONGO_URI || "mongodb://127.0.0.1:27017/portfolio";
+const uri = process.env.MONGODB_URI || process.env.MONGO_URI;
+
+if (!uri) {
+  console.error("No MongoDB URI found. Set MONGODB_URI in server/.env or your shell environment.");
+  process.exit(1);
+}
 
 async function seed() {
   try {
-    await mongoose.connect(uri);
+    await mongoose.connect(uri, {
+      serverSelectionTimeoutMS: 15000,
+    });
     console.log("Connected to MongoDB for seeding...");
 
     await Portfolio.deleteMany({});
